@@ -24,4 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "iTunesCodeChallenge"
 include(":app")
- 
+
+// Core modules (layer-based)
+include(":core:common")
+include(":core:domain")
