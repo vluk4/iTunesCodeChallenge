@@ -1,4 +1,5 @@
 <resources>
     <string name="songs_title">Músicas</string>
     <string name="search_placeholder">Buscar</string>
+    <string name="clear_search">Limpar busca</string>
 </resources>
