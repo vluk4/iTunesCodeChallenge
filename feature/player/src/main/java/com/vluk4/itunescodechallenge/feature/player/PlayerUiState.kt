@@ -10,6 +10,7 @@ data class PlayerUiState(
     val durationMs: Long = 0L,
     val isPlaying: Boolean = false,
     val isBuffering: Boolean = false,
+    val isRepeatEnabled: Boolean = false,
     val showMoreOptions: Boolean = false,
     val error: PlayerError? = null,
 ) {

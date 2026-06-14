@@ -61,6 +61,7 @@ fun PlayerRoute(
         onPlayPause = viewModel::onPlayPause,
         onForward = viewModel::onForward,
         onBackward = viewModel::onBackward,
+        onToggleRepeat = viewModel::onToggleRepeat,
         onMoreOptionsVisibilityChange = viewModel::onMoreOptionsVisibilityChange,
         onViewAlbum = onViewAlbum,
     )
@@ -75,6 +76,7 @@ internal fun PlayerScreen(
     onPlayPause: () -> Unit,
     onForward: () -> Unit,
     onBackward: () -> Unit,
+    onToggleRepeat: () -> Unit,
     onMoreOptionsVisibilityChange: (Boolean) -> Unit,
     onViewAlbum: (Long) -> Unit,
 ) {
@@ -114,10 +116,12 @@ internal fun PlayerScreen(
                     positionLabel = state.positionLabel,
                     durationLabel = state.durationLabel,
                     isPlaying = state.isPlaying,
+                    isRepeatEnabled = state.isRepeatEnabled,
                     onSeekToFraction = onSeekToFraction,
                     onPlayPause = onPlayPause,
                     onForward = onForward,
                     onBackward = onBackward,
+                    onToggleRepeat = onToggleRepeat,
                 )
 
                 else -> Text(stringResource(playerErrorTextRes(state.error)))
@@ -146,10 +150,12 @@ private fun PlayerContent(
     positionLabel: String,
     durationLabel: String,
     isPlaying: Boolean,
+    isRepeatEnabled: Boolean,
     onSeekToFraction: (Float) -> Unit,
     onPlayPause: () -> Unit,
     onForward: () -> Unit,
     onBackward: () -> Unit,
+    onToggleRepeat: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -221,11 +227,15 @@ private fun PlayerContent(
                 Icon(Icons.Filled.SkipNext, contentDescription = stringResource(R.string.action_next))
             }
             Spacer(Modifier.weight(1f))
-            IconButton(onClick = { /* repeat mode is visual for now */ }) {
+            IconButton(onClick = onToggleRepeat) {
                 Icon(
                     Icons.Filled.Repeat,
                     contentDescription = stringResource(R.string.action_repeat),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = if (isRepeatEnabled) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
             }
         }
@@ -256,6 +266,7 @@ private fun PlayerScreenPreview() {
             onPlayPause = {},
             onForward = {},
             onBackward = {},
+            onToggleRepeat = {},
             onMoreOptionsVisibilityChange = {},
             onViewAlbum = {}
         )

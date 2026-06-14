@@ -45,6 +45,10 @@ internal class ExoAudioPlayer @Inject constructor(
                     )
                 }
             }
+
+            override fun onRepeatModeChanged(repeatMode: Int) {
+                _state.update { it.copy(isRepeatEnabled = repeatMode != Player.REPEAT_MODE_OFF) }
+            }
         })
     }
 
@@ -85,6 +89,10 @@ internal class ExoAudioPlayer @Inject constructor(
     }
 
     override fun seekBy(deltaMs: Long) = seekTo(player.currentPosition + deltaMs)
+
+    override fun setRepeat(enabled: Boolean) {
+        player.repeatMode = if (enabled) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
+    }
 
     override fun release() {
         pollingJob?.cancel()

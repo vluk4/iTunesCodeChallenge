@@ -58,6 +58,7 @@ class PlayerViewModel @Inject constructor(
                     it.copy(
                         isPlaying = playback.isPlaying,
                         isBuffering = playback.isBuffering,
+                        isRepeatEnabled = playback.isRepeatEnabled,
                         positionMs = playback.positionMs,
                         durationMs = if (playback.durationMs > 0) playback.durationMs else it.durationMs,
                     )
@@ -72,6 +73,8 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun onPlayPause() = audioPlayer.playPause()
+
+    fun onToggleRepeat() = audioPlayer.setRepeat(!_uiState.value.isRepeatEnabled)
 
     fun onForward() = audioPlayer.seekBy(SKIP_MS)
 

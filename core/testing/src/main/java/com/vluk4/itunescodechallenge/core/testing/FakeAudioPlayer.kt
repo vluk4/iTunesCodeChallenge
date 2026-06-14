@@ -30,5 +30,7 @@ class FakeAudioPlayer : AudioPlayer {
         it.copy(positionMs = (it.positionMs + deltaMs).coerceAtLeast(0L))
     }
 
+    override fun setRepeat(enabled: Boolean) = _state.update { it.copy(isRepeatEnabled = enabled) }
+
     override fun release() = Unit
 }

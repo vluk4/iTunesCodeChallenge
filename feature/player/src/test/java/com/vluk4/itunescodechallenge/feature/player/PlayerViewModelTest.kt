@@ -65,6 +65,20 @@ class PlayerViewModelTest {
     }
 
     @Test
+    fun `onToggleRepeat turns auto-replay on and off`() = runTest {
+        repository.searchResults = listOf(song("https://example.com/preview.m4a"))
+        val viewModel = viewModel()
+
+        assertFalse(viewModel.uiState.value.isRepeatEnabled)
+
+        viewModel.onToggleRepeat()
+        assertTrue(viewModel.uiState.value.isRepeatEnabled)
+
+        viewModel.onToggleRepeat()
+        assertFalse(viewModel.uiState.value.isRepeatEnabled)
+    }
+
+    @Test
     fun `reports an error when the song has no preview`() = runTest {
         repository.searchResults = listOf(song(previewUrl = null))
 
