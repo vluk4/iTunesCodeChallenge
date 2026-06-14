@@ -31,3 +31,11 @@ include(":core:designsystem")
 include(":core:domain")
 include(":core:network")
 include(":core:database")
+include(":core:data")
+include(":core:player")
+include(":core:testing")
+
+// Feature modules
+include(":feature:songs")
+include(":feature:player")
+include(":feature:album")

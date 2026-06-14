@@ -1,0 +1,6 @@
+<resources>
+    <string name="album_title_fallback">Álbum</string>
+    <string name="back">Voltar</string>
+    <string name="error_generic">Falha ao carregar o álbum</string>
+    <string name="retry">Tentar novamente</string>
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="now_playing">Tocando agora</string>
+    <string name="back">Voltar</string>
+    <string name="more_options">Mais opções</string>
+    <string name="error_generic">Algo deu errado</string>
+    <string name="error_song_unavailable">Música indisponível</string>
+    <string name="error_no_preview">Nenhuma prévia disponível para esta música</string>
+    <string name="action_play">Reproduzir</string>
+    <string name="action_pause">Pausar</string>
+    <string name="action_previous">Anterior</string>
+    <string name="action_next">Próxima</string>
+    <string name="action_repeat">Repetir</string>
+</resources>

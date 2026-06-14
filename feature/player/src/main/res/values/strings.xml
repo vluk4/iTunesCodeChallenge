@@ -1,0 +1,13 @@
+<resources>
+    <string name="now_playing">Now playing</string>
+    <string name="back">Back</string>
+    <string name="more_options">More options</string>
+    <string name="error_generic">Something went wrong</string>
+    <string name="error_song_unavailable">Song unavailable</string>
+    <string name="error_no_preview">No preview available for this song</string>
+    <string name="action_play">Play</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_repeat">Repeat</string>
+</resources>

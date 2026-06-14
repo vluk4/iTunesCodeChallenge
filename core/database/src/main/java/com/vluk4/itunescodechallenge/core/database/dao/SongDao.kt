@@ -2,9 +2,8 @@ package com.vluk4.itunescodechallenge.core.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import com.vluk4.itunescodechallenge.core.database.entity.SongEntity
 import kotlinx.coroutines.flow.Flow
@@ -13,18 +12,34 @@ import kotlinx.coroutines.flow.Flow
 interface SongDao {
 
     @Query(
-        "SELECT * FROM songs WHERE searchQuery = :query ORDER BY pageIndex ASC, id ASC"
+        "SELECT * FROM songs WHERE searchQuery = :query ORDER BY sortIndex ASC, id ASC"
     )
     fun pagingSource(query: String): PagingSource<Int, SongEntity>
 
-    @Upsert
-    suspend fun upsertAll(songs: List<SongEntity>)
+    @Transaction
+    suspend fun cacheSongs(songs: List<SongEntity>) {
+        songs.forEach { incoming ->
+            val existing = getById(incoming.id)
+            val merged = if (existing == null) {
+                incoming
+            } else {
+                incoming.copy(
+                    searchQuery = incoming.searchQuery ?: existing.searchQuery,
+                    sortIndex = incoming.sortIndex ?: existing.sortIndex,
+                    lastPlayedAt = incoming.lastPlayedAt ?: existing.lastPlayedAt,
+                )
+            }
+            upsert(merged)
+        }
+    }
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertIgnore(songs: List<SongEntity>)
-
-    @Query("DELETE FROM songs WHERE searchQuery = :query")
+    @Query("DELETE FROM songs WHERE searchQuery = :query AND lastPlayedAt IS NULL")
     suspend fun clearByQuery(query: String)
+
+    @Query(
+        "DELETE FROM songs WHERE searchQuery IS NOT NULL AND searchQuery != :activeQuery AND lastPlayedAt IS NULL"
+    )
+    suspend fun clearInactiveSearchCaches(activeQuery: String)
 
     @Query("SELECT * FROM songs WHERE lastPlayedAt IS NOT NULL ORDER BY lastPlayedAt DESC LIMIT :limit")
     fun observeRecentlyPlayed(limit: Int): Flow<List<SongEntity>>

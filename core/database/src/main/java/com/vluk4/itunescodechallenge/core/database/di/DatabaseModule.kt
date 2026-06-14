@@ -3,7 +3,6 @@ package com.vluk4.itunescodechallenge.core.database.di
 import android.content.Context
 import androidx.room.Room
 import com.vluk4.itunescodechallenge.core.database.ItunesDatabase
-import com.vluk4.itunescodechallenge.core.database.dao.RemoteKeyDao
 import com.vluk4.itunescodechallenge.core.database.dao.SongDao
 import dagger.Module
 import dagger.Provides
@@ -25,7 +24,4 @@ object DatabaseModule {
 
     @Provides
     fun provideSongDao(database: ItunesDatabase): SongDao = database.songDao()
-
-    @Provides
-    fun provideRemoteKeyDao(database: ItunesDatabase): RemoteKeyDao = database.remoteKeyDao()
 }

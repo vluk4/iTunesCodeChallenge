@@ -16,6 +16,7 @@ data class SongEntity(
     val trackTimeMillis: Long?,
     val releaseDate: String?,
     val searchQuery: String?,
-    val pageIndex: Int?,
+    /** Position of this song within its search result set; preserves API relevance order. */
+    val sortIndex: Int?,
     val lastPlayedAt: Long?,
 )
