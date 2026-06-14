@@ -31,6 +31,7 @@ fun MediaRow(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     onMoreClick: (() -> Unit)? = null,
+    sharedKey: String? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -39,7 +40,7 @@ fun MediaRow(
             .clickable(onClick = onClick)
             .padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
-        Artwork(url = artworkUrl, contentDescription = title, size = 48.dp)
+        Artwork(url = artworkUrl, contentDescription = title, size = 48.dp, sharedKey = sharedKey)
         Column(
             modifier = Modifier
                 .weight(1f)

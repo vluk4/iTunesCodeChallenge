@@ -43,6 +43,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vluk4.itunescodechallenge.core.designsystem.component.Artwork
 import com.vluk4.itunescodechallenge.core.designsystem.component.MoreOptionsBottomSheet
+import com.vluk4.itunescodechallenge.core.designsystem.transition.artworkSharedKey
 import com.vluk4.itunescodechallenge.core.domain.model.Song
 import com.vluk4.itunescodechallenge.feature.player.R
 
@@ -170,6 +171,7 @@ private fun PlayerContent(
                 size = 280.dp,
                 cornerRadius = 16.dp,
                 modifier = Modifier.aspectRatio(1f),
+                sharedKey = artworkSharedKey(song.id),
             )
         }
 

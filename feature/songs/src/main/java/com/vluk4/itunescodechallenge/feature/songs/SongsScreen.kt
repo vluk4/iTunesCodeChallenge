@@ -39,6 +39,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.vluk4.itunescodechallenge.core.designsystem.component.MediaRow
 import com.vluk4.itunescodechallenge.core.designsystem.component.MoreOptionsBottomSheet
+import com.vluk4.itunescodechallenge.core.designsystem.transition.artworkSharedKey
 import com.vluk4.itunescodechallenge.core.domain.model.Song
 import com.vluk4.itunescodechallenge.feature.songs.R
 
@@ -138,6 +139,7 @@ private fun SongRow(song: Song, onClick: (Song) -> Unit, onMore: () -> Unit) {
         artworkUrl = song.artworkUrl,
         onClick = { onClick(song) },
         onMoreClick = onMore,
+        sharedKey = artworkSharedKey(song.id),
     )
 }
 

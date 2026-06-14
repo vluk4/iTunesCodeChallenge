@@ -1,7 +1,9 @@
 package com.vluk4.itunescodechallenge.feature.songs.navigation
 
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.vluk4.itunescodechallenge.core.designsystem.transition.LocalNavAnimatedVisibilityScope
 import com.vluk4.itunescodechallenge.core.domain.model.Song
 import com.vluk4.itunescodechallenge.feature.songs.SongsRoute
 
@@ -12,6 +14,8 @@ fun NavGraphBuilder.songsScreen(
     onViewAlbum: (collectionId: Long) -> Unit,
 ) {
     composable(route = SONGS_ROUTE) {
-        SongsRoute(onSongClick = onSongClick, onViewAlbum = onViewAlbum)
+        CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
+            SongsRoute(onSongClick = onSongClick, onViewAlbum = onViewAlbum)
+        }
     }
 }

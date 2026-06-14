@@ -11,7 +11,9 @@ import com.vluk4.itunescodechallenge.feature.album.AlbumRoute
 const val ALBUM_ARG_COLLECTION_ID = "collectionId"
 private const val ALBUM_ROUTE = "album"
 
-fun NavController.navigateToAlbum(collectionId: Long) = navigate("$ALBUM_ROUTE/$collectionId")
+fun NavController.navigateToAlbum(collectionId: Long) = navigate("$ALBUM_ROUTE/$collectionId") {
+    launchSingleTop = true
+}
 
 fun NavGraphBuilder.albumScreen(
     onBack: () -> Unit,
