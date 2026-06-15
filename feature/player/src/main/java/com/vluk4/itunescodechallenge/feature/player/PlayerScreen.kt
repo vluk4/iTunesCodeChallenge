@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -26,9 +28,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -43,6 +45,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vluk4.itunescodechallenge.core.designsystem.component.Artwork
 import com.vluk4.itunescodechallenge.core.designsystem.component.MoreOptionsBottomSheet
+import com.vluk4.itunescodechallenge.core.designsystem.component.PlaybackSlider
 import com.vluk4.itunescodechallenge.core.designsystem.transition.artworkSharedKey
 import com.vluk4.itunescodechallenge.core.domain.model.Song
 import com.vluk4.itunescodechallenge.feature.player.R
@@ -85,15 +88,26 @@ internal fun PlayerScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.now_playing), style = MaterialTheme.typography.titleMedium) },
+                title = {
+                    Text(
+                        stringResource(R.string.now_playing),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
                     }
                 },
                 actions = {
                     IconButton(onClick = { onMoreOptionsVisibilityChange(true) }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options))
+                        Icon(
+                            Icons.Filled.MoreVert,
+                            contentDescription = stringResource(R.string.more_options)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -189,10 +203,10 @@ private fun PlayerContent(
         )
 
         Spacer(Modifier.height(16.dp))
-        // Timeline is mandatory; drag-to-seek is wired through onSeekToFraction.
-        Slider(
-            value = progress,
-            onValueChange = onSeekToFraction,
+        PlaybackSlider(
+            progress = progress,
+            onProgressChange = onSeekToFraction,
+            modifier = Modifier.fillMaxWidth(),
         )
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -213,7 +227,15 @@ private fun PlayerContent(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            FilledIconButton(onClick = onPlayPause, modifier = Modifier.size(56.dp)) {
+            FilledIconButton(
+                onClick = onPlayPause,
+                modifier = Modifier.size(56.dp),
+                colors = IconButtonDefaults.filledIconButtonColors()
+                    .copy(
+                        containerColor = MaterialTheme.colorScheme.outline,
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    )
+            ) {
                 Icon(
                     imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
                     contentDescription = stringResource(
@@ -223,10 +245,16 @@ private fun PlayerContent(
             }
             Spacer(Modifier.size(8.dp))
             IconButton(onClick = onBackward) {
-                Icon(Icons.Filled.SkipPrevious, contentDescription = stringResource(R.string.action_previous))
+                Icon(
+                    Icons.Filled.FastRewind,
+                    contentDescription = stringResource(R.string.action_previous)
+                )
             }
             IconButton(onClick = onForward) {
-                Icon(Icons.Filled.SkipNext, contentDescription = stringResource(R.string.action_next))
+                Icon(
+                    Icons.Filled.FastForward,
+                    contentDescription = stringResource(R.string.action_next)
+                )
             }
             Spacer(Modifier.weight(1f))
             IconButton(onClick = onToggleRepeat) {
@@ -253,7 +281,8 @@ private fun playerErrorTextRes(error: PlayerError?): Int = when (error) {
 @Preview
 @Composable
 private fun PlayerScreenPreview() {
-    val fakeSong = Song(1, "Song Title", "Artist Name", 1, "Collection", "url", null, null, null, null)
+    val fakeSong =
+        Song(1, "Song Title", "Artist Name", 1, "Collection", "url", null, null, null, null)
     ITunesCodeChallengeTheme {
         PlayerScreen(
             state = PlayerUiState(
