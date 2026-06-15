@@ -23,6 +23,7 @@ media3 = "1.10.1"
 coreSplashscreen = "1.0.1"
 turbine = "1.2.1"
 mockk = "1.14.2"
+robolectric = "4.14.1"
 
 [libraries]
 # AndroidX core
@@ -90,6 +91,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
